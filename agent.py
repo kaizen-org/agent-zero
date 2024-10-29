@@ -115,9 +115,10 @@ class AgentContext:
 
 @dataclass
 class AgentConfig:
-    chat_model: BaseChatModel | BaseLLM
+    chat_model: list[BaseChatModel | BaseLLM]
     utility_model: BaseChatModel | BaseLLM
     embeddings_model: Embeddings
+    chat_model_index: int = 0
     prompts_subdir: str = ""
     memory_subdir: str = ""
     knowledge_subdirs: list[str] = field(default_factory=lambda: ["default", "custom"])
@@ -274,7 +275,9 @@ class Agent:
                                 MessagesPlaceholder(variable_name="messages"),
                             ]
                         )
-                        chain = prompt | self.config.chat_model
+                        chain = prompt | self.config.chat_model[self.config.chat_model_index]
+                        self.config.chat_model_index= (self.config.chat_model_index + 1) % len(self.config.chat_model)
+                        self.context.log.log(self.config.chat_model_index);
 
                         # rate limiter TODO - move to extension, make per-model
                         formatted_inputs = prompt.format(messages=self.history)
