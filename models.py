@@ -73,6 +73,18 @@ def get_google_chat(model_name:str, api_key=get_api_key("google"), temperature=D
 def get_mistral_chat(model_name:str, api_key=get_api_key("mistral"), temperature=DEFAULT_TEMPERATURE):
     return ChatMistralAI(model=model_name, temperature=temperature, api_key=api_key) # type: ignore
 
+def get_list_groq_chat(model_name:str,  temperature=DEFAULT_TEMPERATURE):
+    suffix = 0
+    chats = []
+    while True:
+        suffix += 1
+        # Aquí puedes agregar cualquier lógica adicional que necesites
+        api_key=get_api_key(f"groq_{suffix}")
+        if api_key is None:
+            break
+        chat = ChatGroq(model_name=model_name, temperature=temperature, api_key=api_key)
+        chats.append(chat)
+    return chats
 # Groq models
 def get_groq_chat(model_name:str, api_key=get_api_key("groq"), temperature=DEFAULT_TEMPERATURE):
     return ChatGroq(model_name=model_name, temperature=temperature, api_key=api_key) # type: ignore
