@@ -28,3 +28,9 @@ def search(query: str, results = 5, region = "wt-wt", time="y") -> list[str]:
     for s in src:
         results.append(str(s))
     return results
+
+def main():
+    print(search("python"))
+
+if __name__ == "__main__":
+    main()

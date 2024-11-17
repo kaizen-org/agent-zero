@@ -1,7 +1,7 @@
 ansio==0.0.1
 beautifulsoup4==4.12.3
 docker==7.1.0
-duckduckgo-search==6.1.12
+duckduckgo-search==5.3.1b1
 faiss-cpu==1.8.0.post1
 flask[async]==3.0.3
 flask-basicauth==0.2.0
